@@ -1,9 +1,14 @@
-from django.db import models
+from django.db import models, connection
 
 NULLABLE = {"blank": True, "null": True}
 
 
 class Category(models.Model):
+    @classmethod
+    def truncate_table_restart_id(cls):
+        with connection.cursor() as cursor:
+            cursor.execute(f'TRUNCATE TABLE {cls._meta.db_table} RESTART IDENTITY CASCADE')
+
     name = models.CharField(
         max_length=100,
         verbose_name="Название категории",
@@ -21,10 +26,15 @@ class Category(models.Model):
         ordering = ["description", "name"]
 
     def __str__(self):
-        return {self.name}
+        return f"{self.name}"
 
 
 class Product(models.Model):
+    @classmethod
+    def truncate_table_restart_id(cls):
+        with connection.cursor() as cursor:
+            cursor.execute(f'TRUNCATE TABLE {cls._meta.db_table} RESTART IDENTITY CASCADE')
+
     name = models.CharField(
         max_length=100,
         verbose_name="Название продукта",
@@ -54,4 +64,4 @@ class Product(models.Model):
         ordering = ["description", "name"]
 
     def __str__(self):
-        return {self.name}
+        return f"{self.name}"

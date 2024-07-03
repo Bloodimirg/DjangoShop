@@ -1,0 +1,41 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Майка XL",
+      "description": "Белая безрукавка",
+      "image": "",
+      "category": 1,
+      "purchase_price": 500,
+      "created_at": "2024-07-02T23:43:26.913Z",
+      "updated_at": "2024-07-02T23:43:26.913Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Шорты",
+      "description": "Идеальны для спорта",
+      "image": "",
+      "category": 1,
+      "purchase_price": 700,
+      "created_at": "2024-07-02T23:44:05.526Z",
+      "updated_at": "2024-07-02T23:44:05.526Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Носки",
+      "description": "Подходят для любой обуви",
+      "image": "",
+      "category": 1,
+      "purchase_price": 300,
+      "created_at": "2024-07-02T23:45:51.875Z",
+      "updated_at": "2024-07-02T23:45:51.875Z"
+    }
+  }
+]

@@ -10,7 +10,7 @@ def home(request):
 
 
 def product_detail(request, pk):
-    """Обработка списка товаров"""
+    """Страница с товаром по ключу"""
     product = Product.objects.get(pk=pk)
     context = {"product": product}
     return render(request, template_name='products/product_detail.html', context=context)

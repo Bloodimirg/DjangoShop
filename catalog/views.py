@@ -1,9 +1,19 @@
 from django.shortcuts import render
+from catalog.models import Product
 
 
 def home(request):
     """Контроллер для главной страницы """
-    return render(request, 'main/home.html')
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, 'products/products_list.html', context=context)
+
+
+def product_detail(request, pk):
+    """Обработка списка товаров"""
+    product = Product.objects.get(pk=pk)
+    context = {"product": product}
+    return render(request, template_name='products/product_detail.html', context=context)
 
 
 def contacts(request):
@@ -14,4 +24,3 @@ def contacts(request):
         message = request.POST.get('message')
         print(f"Имя: {name} | телефон: {phone} | сообщение: {message}")
     return render(request, template_name='main/contacts.html')
-

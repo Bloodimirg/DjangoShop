@@ -6,7 +6,7 @@
 
             <div class="col rounded mx-auto d-block border border-0">
                 <div class="card shadow-sm">
-                    <img src="{{ product.image | media_filter}}" class="rounded mx-auto d-block">
+                    <img src="{{ product.image | media_filter}}" class="img-fluid">
                     <div class="card-body">
                         <p class="card-text">{{ product.name }}</p>
                         <p class="card-text">{{ product.description | slice:":100" }}</p>

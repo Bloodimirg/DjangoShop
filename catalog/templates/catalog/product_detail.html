@@ -1,4 +1,4 @@
-{% extends 'main/home.html' %}
+{% extends 'catalog/home.html' %}
 {% load my_tags %}
 {% block content %}
     <div class="container">
@@ -8,8 +8,8 @@
                 <div class="card shadow-sm">
                     <img src="{{ product.image | media_filter}}" class="img-fluid">
                     <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
-                        <p class="card-text">{{ product.description | slice:":100" }}</p>
+                        <p class="card-text">{{ object.name }}</p>
+                        <p class="card-text">{{ object.description | slice:":100" }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group ">
                             <a class="btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk%}"
@@ -17,7 +17,7 @@
                             <a class="btn btn-outline-primary" href=""
                                role="button">Купить</a>
                         </div>
-                            <small class="text-body-secondary fs-3">{{ product.purchase_price }} руб.</small>
+                            <small class="text-body-secondary fs-3">{{ object.purchase_price }} руб.</small>
                         </div>
                     </div>
                 </div>

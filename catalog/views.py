@@ -24,6 +24,3 @@ class ContactsView(View):
         # Здесь можно добавить логику обработки данных формы
         return render(request, template_name='catalog/contacts.html')
 
-# class ProductCreateView(CreateView):
-#     model = Product
-#     fields = ("name", "description", "image", )

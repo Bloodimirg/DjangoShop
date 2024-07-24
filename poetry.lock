@@ -546,6 +546,16 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pytils"
+version = "0.4.1"
+description = "Russian-specific string utils"
+optional = false
+python-versions = "^3.7"
+files = [
+    {file = "pytils-0.4.1.tar.gz", hash = "sha256:aa109b1bc0ec4bdb7c9768520110348d8aeb0706600e6cf641272e6850e26eab"},
+]
+
+[[package]]
 name = "shell"
 version = "1.0.1"
 description = "A better way to run shell commands in Python."
@@ -663,4 +673,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "829645410a8edf51666a4e02242ab94d0286d1d3e97b843db0c1db7b886957a8"
+content-hash = "a9e95f686a375bab6328ad97e973177807a3b25973313e5c0e227417d50d5872"

@@ -1,26 +1,26 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, View, CreateView
+
 from catalog.models import Product
 
 
-def home(request):
-    """Контроллер для главной страницы """
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, 'products/products_list.html', context=context)
+class ProductListView(ListView):
+    model = Product
 
 
-def product_detail(request, pk):
-    """Страница с товаром по ключу"""
-    product = Product.objects.get(pk=pk)
-    context = {"product": product}
-    return render(request, template_name='products/product_detail.html', context=context)
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def contacts(request):
-    """Контроллер обработки страницы контактов"""
-    if request.method == 'POST':
+class ContactsView(View):
+    def get(self, request):
+        return render(request, template_name='catalog/contacts.html')
+
+    def post(self, request):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
         print(f"Имя: {name} | телефон: {phone} | сообщение: {message}")
-    return render(request, template_name='main/contacts.html')
+        # Здесь можно добавить логику обработки данных формы
+        return render(request, template_name='catalog/contacts.html')
+

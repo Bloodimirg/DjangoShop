@@ -1,0 +1,21 @@
+{% extends 'catalog/home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="col-12">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col rounded mx-auto d-block border border-0">
+            <div class="card shadow-sm">
+                <img src="/media/{{ object.image }}" style="height: 400px; object-fit: cover;"/>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <p>Хотите удалить "{{object.title }}" ?</p>
+                    <button type="submit" class="btn btn-danger">Подтвердить</button>
+                    <a href="{% url 'materials:list_materials' %}" class="btn btn_warnin">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -13,6 +13,7 @@ pillow = "^10.4.0"
 black = "^24.4.2"
 shell = "^1.0.1"
 ipython = "^8.26.0"
+pytils = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
 

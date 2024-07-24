@@ -1,0 +1,48 @@
+{% extends 'catalog/home.html' %}
+{% load my_tags %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="d-flex justify-content-center my-3">
+        <a class="btn btn-outline-primary rounded" href="{% url 'materials:create_materials' %}" style="max-width: 200px;">Добавить материал</a>
+    </div>
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% for object in object_list %}
+        <div class="col">
+
+            <div class="card shadow-sm card-fixed-height" >
+                {% if object.image %}
+                <img src="/media/{{ object.image }}" style="height: 400px; object-fit: cover;"/>
+                {% else %}
+                <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
+                {% endif %}
+                <div class="card-body">
+                    <p class="card-textbody-secondary fs-3">{{ object.title }}</p>
+                    <p class="card-text">{{ object.body | slice:":100" }}</p>
+                    <p class="card-textbody-secondary fs-6">Создано: {{ object.created_at }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group ">
+                            <a class="btn btn-outline-primary" href="{% url 'materials:view_materials' object.pk %}"
+                               role="button">Посмотреть</a>
+                            <a class="btn btn-outline-primary" href="{% url 'materials:update_materials' object.pk %}"
+                               role="button">Изменить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'materials:delete_material' object.pk %}"
+                               role="button">Удалить</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

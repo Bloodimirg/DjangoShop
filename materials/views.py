@@ -13,10 +13,10 @@ class MaterialsCreateView(CreateView):
     success_url = reverse_lazy('materials:list_materials')
 
     def form_valid(self, form):
-        if form.is_valid():
-            new_mat = form.save()
-            new_mat.slug = slugify(new_mat.title)
-            new_mat.save()
+
+        new_mat = form.save(commit=False)
+        new_mat.slug = slugify(new_mat.title)
+        new_mat.save()
 
         return super().form_valid(form)
 

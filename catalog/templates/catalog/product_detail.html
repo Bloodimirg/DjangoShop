@@ -1,34 +1,28 @@
 {% extends 'catalog/home.html' %}
 {% load my_tags %}
 {% block content %}
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-            <div class="col rounded mx-auto d-block border border-0">
-                <div class="card shadow-sm">
-<!--                    если картинка не загружена-->
-                    {% if product.image %}
-                <img src="{{ product.image | media_filter}}" style="height: 400px; object-fit: cover;">
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col rounded mx-auto d-block border border-0">
+            <div class="card shadow-sm">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" style="height: 400px; object-fit: cover;">
                 {% else %}
-                <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
+                    <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
                 {% endif %}
-                    <div class="card-body">
-                        <p class="card-text">{{ object.name }}</p>
-                        <p class="card-text">{{ object.description | slice:":100" }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group ">
-<!--                                урлы для перехода по кнопкам -->
-                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk%}"
-                               role="button">Посмотреть</a>
-                            <a class="btn btn-outline-primary" href=""
-                               role="button">Купить</a>
+                <div class="card-body">
+                    <p class="card-text">{{ object.name }}</p>
+                    <p class="card-text">{{ object.description | slice:":100" }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Изменить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                         </div>
-                            <small class="text-body-secondary fs-3">{{ object.purchase_price }} руб.</small>
-                        </div>
+                        <small class="text-body-secondary fs-3">{{ object.purchase_price }} руб.</small>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+</div>
 {% endblock %}

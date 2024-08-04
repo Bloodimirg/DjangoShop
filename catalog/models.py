@@ -65,3 +65,25 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, related_name='versions', on_delete=models.SET_NULL, **NULLABLE)
+    version_number = models.CharField(max_length=50, verbose_name='Номер версии')
+    version_name = models.CharField(max_length=255, verbose_name='Название версии')
+    is_current = models.BooleanField(default=False, verbose_name='Текущая версия')
+
+    class Meta:
+        ordering = ['-is_current', 'version_number']
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
+
+        # ограничение полей product и current_version,
+        # гарантия того, что для каждого продукта может быть только одна текущая версия.
+        constraints = [
+            models.UniqueConstraint(fields=['product', 'is_current'], condition=models.Q(is_current=True),
+                                    name='unique_current_version')
+        ]
+
+    def __str__(self):
+        return f"{self.version_name} (v{self.version_number})"

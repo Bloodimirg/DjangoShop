@@ -1,11 +1,23 @@
 {% extends 'catalog/home.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-6 rounded mx-auto">
-        <div class="card">
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
+<style>
+.form-with-border {
+    border-bottom: 1px solid #ccc; /* Граница снизу */
+    padding-bottom: 20px; /* Добавляем немного отступа снизу для лучшего вида */
+    margin-bottom: 20px; /* Отступ между формами */
+}
+</style>
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card">
+                {% if object %}
+                <p class="card-text"> Редактирование продукта</p>
+                {% else %}
+                <p class="card-text"> Создание продукта</p>
+                {% endif %}
+                <div class="card-body">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit" class="btn btn-outline-primary rounded mx-auto">
@@ -15,9 +27,23 @@
                         Создать
                         {% endif %}
                     </button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="col-6">
+            <div class="card">
+                <p class="card-text"> Версия продукта</p>
+                <div class="card-body">
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                    <div class="{% if forloop.last %}form-no-border{% else %}form-with-border{% endif %}">
+                    {{ form.as_p }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </form>
 </div>
 {% endblock %}

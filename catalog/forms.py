@@ -5,6 +5,7 @@ from catalog.models import Product, Version
 
 
 class StyleFormMixin:
+    """Миксин для стилизации форм"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -44,6 +45,7 @@ class ProductForm(StyleFormMixin, ModelForm):
 
 
 class VersionForm(StyleFormMixin, ModelForm):
+    """Форма версии продукта"""
     class Meta:
         model = Version
         fields = "__all__"

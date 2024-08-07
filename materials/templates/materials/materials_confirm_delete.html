@@ -5,7 +5,11 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col rounded mx-auto d-block border border-0">
             <div class="card shadow-sm">
-                <img src="/media/{{ object.image }}" style="height: 400px; object-fit: cover;"/>
+                {% if materials.image %}
+                <img src="/media/{{ materials.image }}" style="height: 400px; object-fit: cover;"/>
+                {% else %}
+                <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
+                {% endif %}
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}

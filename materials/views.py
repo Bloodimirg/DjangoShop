@@ -1,15 +1,15 @@
-
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
+from materials.forms import MaterialsForm
 from materials.models import Materials
 
 
 class MaterialsCreateView(CreateView):
     """Контроллер для создания материалов"""
     model = Materials
-    fields = ('title', 'body', 'image', 'is_published')
+    form_class = MaterialsForm
     success_url = reverse_lazy('materials:list_materials')
 
     def form_valid(self, form):
@@ -45,7 +45,7 @@ class MaterialsDetailView(DetailView):
 class MaterialsUpdateView(UpdateView):
     """Контроллер для изменения материала"""
     model = Materials
-    fields = ('title', 'body', 'image', 'is_published')
+    form_class = MaterialsForm
 
     def get_success_url(self, *args, **kwargs):
         return reverse('materials:view_materials', args=[self.kwargs.get('pk')])

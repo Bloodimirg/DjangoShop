@@ -14,10 +14,12 @@
                     <p class="card-text">{{ object.name }}</p>
                     <p class="card-text">{{ object.description | slice:":100" }}</p>
                     <div class="d-flex justify-content-between align-items-center">
+                        {% if user.is_authenticated %}
                         <div class="btn-group">
                             <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Изменить</a>
                             <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                         </div>
+                        {% endif %}
                         <small class="text-body-secondary fs-3">{{ object.purchase_price }} руб.</small>
                     </div>
                 </div>

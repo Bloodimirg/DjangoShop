@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -6,12 +7,17 @@ from catalog.models import Product, Version
 from catalog.forms import ProductForm, VersionForm
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     """Создание продукта"""
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:home')
+
+    def form_valid(self, form):
+        # Привязываем текущего пользователя к продукту
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class ProductListView(ListView):
@@ -29,13 +35,13 @@ class ProductListView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, LoginRequiredMixin):
     """Просмотр одного продукта"""
     model = Product
     template_name = 'catalog/product_detail.html'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     """Редактирование продукта"""
     model = Product
     form_class = ProductForm
@@ -68,7 +74,7 @@ class ProductUpdateView(UpdateView):
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     """Удаление продукта"""
     model = Product
     success_url = reverse_lazy('catalog:home')

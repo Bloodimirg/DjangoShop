@@ -1,0 +1,77 @@
+[
+  {
+    "model": "users.user",
+    "pk": 33,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$6uUkYLnmsZw29BlYlWoAJg$uGBqSQBH6KNxtrq94hu+zfch4DvdJvCaeyQveoBQ1Go=",
+      "last_login": "2024-08-17T17:03:21.165Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-16T11:45:45Z",
+      "email": "bloodimirg@gmail.com",
+      "phone": null,
+      "avatar": "",
+      "country": "USA",
+      "token": "408f6a83e1056f18f8e9bdcd4664f956",
+      "groups": [
+        5
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 36,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$4CvFOC5uqcXDRTw4nvwCbm$q5rIG7C3+pYS7xWcIBP47MuXJ9ZkL6YmcTsEsbOTmHg=",
+      "last_login": "2024-08-17T17:04:01.643Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-08-16T12:21:23Z",
+      "email": "Admin@example.com",
+      "phone": null,
+      "avatar": "",
+      "country": "Germany",
+      "token": null,
+      "groups": [
+        4
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 38,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$RFFic6MRWPURNzK4OoNDp2$7fZMnbBhA4G4q/cFcyWfKV/4McOznD78R4WdNurBRFE=",
+      "last_login": "2024-08-17T16:51:41.290Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-08-16T12:56:40Z",
+      "email": "moderator@example.com",
+      "phone": null,
+      "avatar": "",
+      "country": "Russia",
+      "token": null,
+      "groups": [
+        1
+      ],
+      "user_permissions": [
+        42,
+        41,
+        43,
+        32,
+        24
+      ]
+    }
+  }
+]

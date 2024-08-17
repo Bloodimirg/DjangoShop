@@ -6,20 +6,38 @@
         <div class="col rounded mx-auto d-block border border-0">
             <div class="card shadow-sm">
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" style="height: 400px; object-fit: cover;">
+                <img src="{{ product.image.url }}" style="height: 400px; object-fit: cover;">
                 {% else %}
-                    <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
+                <img src="/media/images/photo/no_photo.jpg" style="height: 400px; object-fit: cover;"/>
                 {% endif %}
                 <div class="card-body">
                     <p class="card-text">{{ object.name }}</p>
                     <p class="card-text">{{ object.description | slice:":100" }}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user.is_superuser %}
                         <div class="btn-group">
-                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Изменить</a>
-                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}"
+                               role="button">Изменить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}"
+                               role="button">Удалить</a>
+                        </div>
+                        {% elif user == product.user %}
+                        <div class="btn-group">
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}"
+                               role="button">Изменить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}"
+                               role="button">Удалить</a>
+                        </div>
+                        {% elif perms.catalog.can_change_description and perms.catalog.can_change_category and perms.catalog.can_change_is_published %}
+                        <div class="btn-group">
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}"
+                               role="button">Изменить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}"
+                               role="button">Удалить</a>
                         </div>
                         {% endif %}
+
+
                         <small class="text-body-secondary fs-3">{{ object.purchase_price }} руб.</small>
                     </div>
                 </div>

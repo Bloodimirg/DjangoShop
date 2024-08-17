@@ -1,5 +1,7 @@
 from django.db import models, connection
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -61,11 +63,17 @@ class Product(models.Model):
     purchase_price = models.IntegerField(**NULLABLE, verbose_name="Цена за покупку")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовать')
+
+    user = models.ForeignKey(User, verbose_name='Владелец', help_text="Укажите владельца", **NULLABLE, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["description", "name"]
+        permissions = [('can_change_description', 'Can change description'),
+                       ('can_change_category', 'Can change category'),
+                       ('can_change_is_published', 'Can change is_published')]
 
     def __str__(self):
         return f"{self.name}"

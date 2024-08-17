@@ -1,17 +1,24 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from catalog.models import Product, Version
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     """Создание продукта"""
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:home')
+
+    def form_valid(self, form):
+        # Привязываем текущего пользователя к продукту
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class ProductListView(ListView):
@@ -29,13 +36,13 @@ class ProductListView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, LoginRequiredMixin):
     """Просмотр одного продукта"""
     model = Product
     template_name = 'catalog/product_detail.html'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     """Редактирование продукта"""
     model = Product
     form_class = ProductForm
@@ -67,8 +74,23 @@ class ProductUpdateView(UpdateView):
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
+    def get_form_class(self):
+        user = self.request.user
 
-class ProductDeleteView(DeleteView):
+        # Superuser - может редактировать все поля у всех
+        if user.is_superuser:
+            return ProductForm
+        # user - может редактировать все поля только если является владельцем
+        if user == self.object.user:
+            return ProductForm
+        # moderator - может редактировать только определенные поля у всех, И все поля если является владельцем продукта
+        if user.has_perm('catalog.can_change_description') and user.has_perm(
+                'catalog.can_change_category') and user.has_perm('catalog.can_change_is_published'):
+            return ProductModeratorForm
+        raise PermissionDenied
+
+
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     """Удаление продукта"""
     model = Product
     success_url = reverse_lazy('catalog:home')

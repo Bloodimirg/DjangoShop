@@ -21,7 +21,7 @@ class ProductForm(StyleFormMixin, ModelForm):
 
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = 'user',
 
     def clean_name(self):
         forbidden_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
@@ -42,6 +42,12 @@ class ProductForm(StyleFormMixin, ModelForm):
             if word in description.lower():
                 raise ValidationError('Описание продукта содержит запрещенное слово.')
         return description
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'is_published')
 
 
 class VersionForm(StyleFormMixin, ModelForm):

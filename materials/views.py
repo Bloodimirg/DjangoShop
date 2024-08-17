@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
@@ -6,14 +7,14 @@ from materials.forms import MaterialsForm
 from materials.models import Materials
 
 
-class MaterialsCreateView(CreateView):
+class MaterialsCreateView(CreateView, LoginRequiredMixin):
     """Контроллер для создания материалов"""
     model = Materials
     form_class = MaterialsForm
     success_url = reverse_lazy('materials:list_materials')
 
     def form_valid(self, form):
-
+        form.instance.user = self.request.user
         new_mat = form.save(commit=False)
         new_mat.slug = slugify(new_mat.title)
         new_mat.save()

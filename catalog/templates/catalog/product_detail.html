@@ -13,6 +13,9 @@
                 <div class="card-body">
                     <p class="card-text">{{ object.name }}</p>
                     <p class="card-text">{{ object.description | slice:":100" }}</p>
+                    {% if product.active_version %}
+                        <p class="card-text"><strong>Текущая версия:</strong> {{ product.active_version.version_name }} (v{{ product.active_version.version_number }})</p>
+                    {% endif %}
                     <div class="d-flex justify-content-between align-items-center">
                         {% if user.is_authenticated and user.is_superuser %}
                         <div class="btn-group">

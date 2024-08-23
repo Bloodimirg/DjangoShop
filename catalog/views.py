@@ -25,6 +25,7 @@ class ProductListView(ListView):
     """Список продуктов"""
     model = Product
     template_name = 'catalog/product_list.html'
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -40,6 +41,16 @@ class ProductDetailView(DetailView, LoginRequiredMixin):
     """Просмотр одного продукта"""
     model = Product
     template_name = 'catalog/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.object
+        active_version = product.versions.filter(is_current=True).first()
+        if active_version:
+            product.active_version = active_version
+        context['object'] = product
+
+        return context
 
 
 class ProductUpdateView(UpdateView, LoginRequiredMixin):

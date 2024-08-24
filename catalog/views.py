@@ -4,8 +4,9 @@ from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
+from catalog.services import get_categories_from_cache
 
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
@@ -106,6 +107,11 @@ class ProductDeleteView(DeleteView, LoginRequiredMixin):
     model = Product
     success_url = reverse_lazy('catalog:home')
     template_name = 'catalog/product_confirm_delete.html'
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/categories_list.html'
+    queryset = get_categories_from_cache()
 
 
 class ContactsView(View):

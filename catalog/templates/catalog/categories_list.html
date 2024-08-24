@@ -1,0 +1,16 @@
+{% extends 'catalog/home.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Категории</h1>
+        <div class="row">
+            {% for category in object_list %}
+                <ul>
+                    <li>{{ category.name }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
